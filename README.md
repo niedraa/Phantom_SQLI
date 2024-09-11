@@ -20,3 +20,7 @@ Ce logiciel est conçu pour détecter les vulnérabilités SQLi de manière effi
 git clone https://github.com/votre-utilisateur/Phantom_SQLI.git
 cd Phantom_SQLI
 pip install -r requirements.txt
+```
+## Utilisation 
+
+
