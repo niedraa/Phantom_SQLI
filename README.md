@@ -1,5 +1,8 @@
 # Phantom_SQLI
 
+![Capture d'écran](image1.png)
+
+
 **Phantom_SQLI** est l'outil le plus puissant pour les injections SQL automatiques ! 🚀
 
 Ce logiciel est conçu pour détecter les vulnérabilités SQLi de manière efficace et rapide. En plus de détecter les failles, **Phantom_SQLI** peut également découvrir certaines informations sur les bases de données ciblées. Tous les payloads utilisés pour les tests sont pré-enregistrés pour garantir une efficacité optimale.
