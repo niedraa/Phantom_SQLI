@@ -29,6 +29,8 @@ pip install -r requirements.txt
 ```bash
 python3 phantom_sqli.py
 ```
+![Capture d'écran](image2.png)
+
 ## Soutenir le Projet
 
 Si vous souhaitez soutenir le développement de **Phantom_SQLI**, vous pouvez me faire un don via [Buy Me a Coffee](https://buymeacoffee.com/niedraaa). Votre soutien est grandement apprécié ! ☕️
