@@ -33,7 +33,7 @@ python3 phantom_sqli.py
 
 ## Soutenir le Projet
 
-Si vous souhaitez soutenir le développement de **Phantom_SQLI**, vous pouvez me faire un don via [Buy Me a Coffee](https://buymeacoffee.com/niedraaa). Votre soutien est grandement apprécié ! ☕️
+Si vous souhaitez soutenir le développement de **Phantom_SQLI**, vous pouvez me faire un don via [Buy Me a Coffee](https://buymeacoffee.com/niedraaa). Votre soutien est grandement apprécié ! ☕️.
 
 **Phantom_SQLI** est un outil puissant, et il est essentiel de l'utiliser de manière responsable pour renforcer la sécurité des systèmes et des applications. Merci pour votre soutien et votre contribution à la sécurité numérique ! 🌟
 
